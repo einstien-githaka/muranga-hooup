@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MURANG'A HOOK'S UP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --crimson: #c8002f;
+            --rose: #ff1a4e;
+            --blush: #ff6b8a;
+            --gold: #e8b84b;
+            --gold-light: #f5d98b;
+            --deep: #06000a;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.09);
+            --text: #f5eef0;
+            --muted: rgba(255, 255, 255, 0.4);
+            --success: #00c27a;
+            --mpesa: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: var(--deep);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        /* ── Slideshow Background ── */
+        
+        #bg-slideshow {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+        
+        #bg-slideshow .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        
+        #bg-slideshow .slide.active {
+            opacity: 1;
+        }
+        
+        #bg-slideshow::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient( 135deg, rgba(6, 0, 10, 0.88) 0%, rgba(6, 0, 10, 0.72) 50%, rgba(200, 0, 47, 0.18) 100%);
+            z-index: 1;
+        }
+        
+        .page {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        /* ── LANDING ── */
+        
+        #landing {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 24px;
+            text-align: center;
+        }
+        
+        .crown {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+        
+        .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -3px;
+            background: linear-gradient(160deg, #fff 0%, var(--blush) 40%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        
+        .tagline {
+            font-size: 0.85rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 70px;
+        }
+        
+        .landing-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: center;
+        }
+        
+        .land-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 32px 44px;
+            border-radius: 24px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            min-width: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .land-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .land-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .land-btn:hover {
+            transform: translateY(-6px) scale(1.03);
+        }
+        
+        .land-btn .emoji {
+            font-size: 2.4rem;
+        }
+        
+        .land-btn .sub {
+            font-size: 0.72rem;
+            opacity: 0.65;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+        
+        .land-btn .price-badge {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: var(--gold-light);
+            border: 1px solid rgba(232, 184, 75, 0.3);
+        }
+        
+        .btn-lady {
+            background: linear-gradient(135deg, var(--crimson), var(--rose));
+            color: #fff;
+            box-shadow: 0 8px 40px rgba(200, 0, 47, 0.4);
+        }
+        
+        .btn-client {
+            background: linear-gradient(135deg, #1a0020, #2d0035);
+            color: #fff;
+            border: 1px solid rgba(232, 184, 75, 0.3);
+            box-shadow: 0 8px 40px rgba(232, 184, 75, 0.15);
+        }
+        /* ── AUTH ── */
+        
+        .auth-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .auth-box {
+            background: rgba(6, 0, 10, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 52px 44px;
+            width: 100%;
+            max-width: 460px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+        }
+        
+        .auth-box h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        
+        .auth-box .sub {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 30px;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 28px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 13px;
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.88rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        
+        .auth-tab.active {
+            background: var(--rose);
+            color: #fff;
+        }
+        
+        .field {
+            margin-bottom: 16px;
+            position: relative;
+        }
+        
+        .field label {
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 7px;
+        }
+        
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 15px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.97rem;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+            appearance: none;
+        }
+        
+        .field input:focus,
+        .field select:focus {
+            border-color: var(--rose);
+            background: rgba(255, 26, 78, 0.07);
+        }
+        
+        .field input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .field select option {
+            background: #150010;
+            color: #fff;
+        }
+        
+        .eye-btn {
+            position: absolute;
+            right: 14px;
+            bottom: 13px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--muted);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 17px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--crimson), var(--rose));
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.97rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-top: 6px;
+            box-shadow: 0 8px 30px rgba(200, 0, 47, 0.35);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px rgba(200, 0, 47, 0.5);
+        }
+        
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 22px;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: color 0.2s;
+        }
+        
+        .back-link:hover {
+            color: var(--blush);
+        }
+        /* ── BILLING / MPESA MODAL ── */
+        
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+        }
+        
+        .billing-modal {
+            background: #0d0012;
+            border: 1px solid rgba(232, 184, 75, 0.25);
+            border-radius: 28px;
+            padding: 44px 40px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+            animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes popIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0
+            }
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+        
+        .billing-modal .bill-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .billing-modal h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .billing-modal .bill-sub {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+        
+        .amount-display {
+            background: linear-gradient(135deg, rgba(232, 184, 75, 0.15), rgba(232, 184, 75, 0.05));
+            border: 1px solid rgba(232, 184, 75, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .amount-display .ksh {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+        
+        .amount-display .ksh-label {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+        
+        .mpesa-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .mpesa-field label {
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        
+        .mpesa-field input {
+            padding: 15px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .mpesa-field input:focus {
+            border-color: var(--mpesa);
+        }
+        
+        .mpesa-field input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-mpesa {
+            width: 100%;
+            padding: 17px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2e7d32, var(--mpesa));
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 8px 30px rgba(76, 175, 80, 0.35);
+        }
+        
+        .btn-mpesa:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px rgba(76, 175, 80, 0.5);
+        }
+        
+        .mpesa-steps {
+            margin-top: 20px;
+            background: rgba(76, 175, 80, 0.07);
+            border: 1px solid rgba(76, 175, 80, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .mpesa-steps p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 2;
+        }
+        
+        .mpesa-steps strong {
+            color: var(--text);
+        }
+        
+        .bill-skip {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .bill-skip:hover {
+            color: var(--blush);
+        }
+        
+        .payment-success {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .payment-success .tick {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            animation: bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes bounce {
+            from {
+                transform: scale(0)
+            }
+            to {
+                transform: scale(1)
+            }
+        }
+        
+        .payment-success h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+        
+        .payment-success p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        /* ── DASHBOARD NAV ── */
+        
+        .dash-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 36px;
+            background: rgba(6, 0, 10, 0.92);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(24px);
+        }
+        
+        .dash-nav .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--blush));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .nav-user {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+        
+        .btn-ghost {
+            padding: 9px 18px;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--rose);
+            color: var(--rose);
+        }
+        
+        .dash-body {
+            padding: 44px 36px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* ── STATS ── */
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 44px;
+        }
+        
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 26px;
+            text-align: center;
+        }
+        
+        .stat-card .val {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            color: var(--rose);
+            line-height: 1;
+        }
+        
+        .stat-card .lbl {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+        /* ── DASH GRID ── */
+        
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+        }
+        
+        @media(max-width:900px) {
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 28px;
+        }
+        
+        .panel h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            margin-bottom: 22px;
+            color: #fff;
+        }
+        /* Profile pic */
+        
+        .profile-pic-wrap {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 22px;
+            cursor: pointer;
+        }
+        
+        .profile-pic-wrap img,
+        .profile-pic-wrap .no-pic {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--rose);
+        }
+        
+        .profile-pic-wrap .no-pic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            background: rgba(255, 26, 78, 0.08);
+        }
+        
+        .upload-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 1.4rem;
+        }
+        
+        .profile-pic-wrap:hover .upload-overlay {
+            opacity: 1;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        /* Gallery */
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 8px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-item .del-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(200, 0, 47, 0.85);
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            color: #fff;
+            font-size: 0.7rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .gallery-item:hover .del-btn {
+            opacity: 1;
+        }
+        
+        .upload-gallery-btn {
+            width: 100%;
+            padding: 13px;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            margin-top: 12px;
+            transition: all 0.2s;
+        }
+        
+        .upload-gallery-btn:hover {
+            border-color: var(--rose);
+            color: var(--rose);
+        }
+        /* ── CLIENT DASHBOARD ── */
+        
+        .filters-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 32px;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        
+        .search-box:focus {
+            border-color: var(--rose);
+        }
+        
+        .search-box::placeholder {
+            color: var(--muted);
+        }
+        
+        .filter-select {
+            padding: 14px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+        }
+        
+        .filter-select option {
+            background: #150010;
+        }
+        
+        .ladies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 22px;
+        }
+        /* Lady Cards */
+        
+        .lady-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .lady-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 28px 70px rgba(200, 0, 47, 0.25);
+        }
+        
+        .card-photos {
+            height: 255px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-photos img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.6s ease;
+            position: absolute;
+        }
+        
+        .card-photos .no-photo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: rgba(255, 26, 78, 0.06);
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            color: var(--gold);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(232, 184, 75, 0.2);
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .card-meta {
+            display: flex;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-wa {
+            flex: 1;
+            padding: 11px;
+            background: #25D366;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: opacity 0.2s;
+        }
+        
+        .btn-wa:hover {
+            opacity: 0.85;
+        }
+        
+        .btn-rate {
+            padding: 11px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--gold);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-rate:hover {
+            background: rgba(232, 184, 75, 0.1);
+            border-color: var(--gold);
+        }
+        /* ── RATING MODAL ── */
+        
+        .rating-modal-box {
+            background: #0d0012;
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            padding: 40px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+        }
+        
+        .rating-modal-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 22px;
+            color: #fff;
+        }
+        
+        .stars {
+            display: flex;
+            gap: 8px;
+            font-size: 2.2rem;
+            margin-bottom: 18px;
+            cursor: pointer;
+        }
+        
+        .star {
+            color: var(--border);
+            transition: color 0.1s;
+        }
+        
+        .star.on {
+            color: var(--gold);
+        }
+        
+        .modal-textarea {
+            width: 100%;
+            padding: 13px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            resize: vertical;
+            min-height: 75px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+        
+        .modal-textarea:focus {
+            border-color: var(--rose);
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        /* ── TOAST ── */
+        
+        #toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #fff;
+            color: #06000a;
+            padding: 13px 26px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            z-index: 9999;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        #toast.err {
+            background: var(--crimson);
+            color: #fff;
+        }
+        
+        #toast.ok {
+            background: var(--success);
+            color: #fff;
+        }
+        /* ── SPINNER ── */
+        
+        .spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid var(--border);
+            border-top-color: var(--rose);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 70px auto;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--muted);
+        }
+        
+        .empty-state .big {
+            font-size: 3.5rem;
+            margin-bottom: 14px;
+        }
+        
+        @media(max-width:600px) {
+            .dash-body {
+                padding: 24px 16px;
+            }
+            .dash-nav {
+                padding: 14px 18px;
+            }
+            .auth-box {
+                padding: 36px 24px;
+            }
+            .billing-modal {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Slideshow -->
+    <div id="bg-slideshow"></div>
+
+    <!-- Toast -->
+    <div id="toast"></div>
+
+    <!-- ═══════════════════════════════════════════
+     LANDING
+════════════════════════════════════════════ -->
+    <div id="page-landing" class="page">
+        <div id="landing">
+            <div class="crown">👑</div>
+            <div class="brand">MURANG'A<br>HOOK'S UP</div>
+            <p class="tagline">Murang'a's Hottest Connection Platform</p>
+            <div class="landing-btns">
+                <button class="land-btn btn-lady" onclick="showPage('page-lady-auth')">
+        <span class="emoji">💋</span>
+        I'm a Lady
+        <span class="sub">Register &amp; Get Seen</span>
+        <span class="price-badge">KSh 50 to Join</span>
+      </button>
+                <button class="land-btn btn-client" onclick="showPage('page-client-auth')">
+        <span class="emoji">🔥</span>
+        I'm a Client
+        <span class="sub">Browse &amp; Connect</span>
+        <span class="price-badge">KSh 50 to Access</span>
+      </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     LADY AUTH
+════════════════════════════════════════════ -->
+    <div id="page-lady-auth" class="page hidden auth-page">
+        <div class="auth-box">
+            <h2>Welcome, Lady 💋</h2>
+            <p class="sub">Create your profile — pay KSh 50 via M-Pesa to go live</p>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('lady','register')">Register</button>
+                <button class="auth-tab" onclick="switchTab('lady','login')">Login</button>
+            </div>
+
+            <div id="lady-register-form">
+                <div class="field"><label>Full Name *</label><input id="l-name" type="text" placeholder="Your name" /></div>
+                <div class="field"><label>Username * (for login)</label><input id="l-username" type="text" placeholder="unique_username" /></div>
+                <div class="field"><label>WhatsApp Number</label><input id="l-phone" type="tel" placeholder="07xxxxxxxx" /></div>
+                <div class="field">
+                    <label>Password *</label>
+                    <input id="l-pass" type="password" placeholder="Min 6 characters" />
+                    <button class="eye-btn" type="button" onclick="togglePass('l-pass')">👁</button>
+                </div>
+                <div class="field">
+                    <label>Your Town *</label>
+                    <select id="l-location">
+          <option value="">Select Town</option>
+          <option>Murang'a Town</option><option>Kangema</option><option>Kenol</option>
+          <option>Maragua</option><option>Kandara</option><option>Gatanga</option>
+          <option>Kigumo</option><option>Other</option>
+        </select>
+                </div>
+                <button class="btn-submit" onclick="ladyRegisterInit()">Continue to Payment →</button>
+            </div>
+
+            <div id="lady-login-form" class="hidden">
+                <div class="field"><label>Username</label><input id="ll-username" type="text" placeholder="your_username" /></div>
+                <div class="field">
+                    <label>Password</label>
+                    <input id="ll-pass" type="password" placeholder="Password" />
+                    <button class="eye-btn" type="button" onclick="togglePass('ll-pass')">👁</button>
+                </div>
+                <button class="btn-submit" onclick="ladyLogin()">Login</button>
+            </div>
+
+            <div class="back-link" onclick="showPage('page-landing')">← Back to Home</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     CLIENT AUTH
+════════════════════════════════════════════ -->
+    <div id="page-client-auth" class="page hidden auth-page">
+        <div class="auth-box">
+            <h2>Welcome, Client 🔥</h2>
+            <p class="sub">Pay KSh 50 via M-Pesa to browse all ladies</p>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('client','register')">Register</button>
+                <button class="auth-tab" onclick="switchTab('client','login')">Login</button>
+            </div>
+
+            <div id="client-register-form">
+                <div class="field"><label>Username *</label><input id="c-user" type="text" placeholder="Pick a username" /></div>
+                <div class="field">
+                    <label>Password *</label>
+                    <input id="c-pass" type="password" placeholder="Min 6 characters" />
+                    <button class="eye-btn" type="button" onclick="togglePass('c-pass')">👁</button>
+                </div>
+                <button class="btn-submit" onclick="clientRegisterInit()">Continue to Payment →</button>
+            </div>
+
+            <div id="client-login-form" class="hidden">
+                <div class="field"><label>Username</label><input id="cl-user" type="text" placeholder="Username" /></div>
+                <div class="field">
+                    <label>Password</label>
+                    <input id="cl-pass" type="password" placeholder="Password" />
+                    <button class="eye-btn" type="button" onclick="togglePass('cl-pass')">👁</button>
+                </div>
+                <button class="btn-submit" onclick="clientLogin()">Login</button>
+            </div>
+
+            <div class="back-link" onclick="showPage('page-landing')">← Back to Home</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     BILLING MODAL (M-Pesa)
+════════════════════════════════════════════ -->
+    <div id="billing-modal" class="modal-bg hidden">
+        <div class="billing-modal">
+            <div class="bill-icon">📱</div>
+            <h3>M-Pesa Payment</h3>
+            <p class="bill-sub" id="bill-desc">Pay to activate your account</p>
+
+            <div class="amount-display">
+                <div class="ksh">KSh 50</div>
+                <div class="ksh-label">One-time activation fee</div>
+            </div>
+
+            <div id="bill-pay-section">
+                <div class="mpesa-field">
+                    <label>Your M-Pesa Number</label>
+                    <input type="tel" id="mpesa-number" placeholder="07xxxxxxxx" maxlength="10" />
+                </div>
+
+                <button class="btn-mpesa" onclick="processMpesa()">
+        💚 Pay KSh 50 via M-Pesa
+      </button>
+
+                <div class="mpesa-steps">
+                    <p><strong>Manual payment option:</strong></p>
+                    <p>1. Go to M-Pesa → Send Money</p>
+                    <p>2. Send <strong>KSh 50</strong> to <strong>0748130976</strong></p>
+                    <p>3. Enter your M-Pesa code below after paying</p>
+                    <div style="margin-top:10px;">
+                        <input type="text" id="mpesa-code" placeholder="e.g. QHX4AB12CD" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:Outfit,sans-serif;font-size:0.9rem;outline:none;margin-top:4px;"
+                        />
+                    </div>
+                    <button class="btn-mpesa" onclick="confirmMpesaCode()" style="margin-top:10px;background:linear-gradient(135deg,#1a5e1f,#2e7d32);">
+          ✅ Confirm Payment Code
+        </button>
+                </div>
+            </div>
+
+            <div id="bill-success-section" class="payment-success hidden">
+                <div class="tick">✅</div>
+                <h4>Payment Confirmed!</h4>
+                <p>Your account is now active. Welcome aboard!</p>
+                <button class="btn-submit" onclick="afterPaymentSuccess()" style="margin-top:20px;">
+        Enter Platform →
+      </button>
+            </div>
+
+            <p class="bill-skip" onclick="skipPayment()">Skip for now (demo mode)</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     RATING MODAL
+════════════════════════════════════════════ -->
+    <div id="rating-modal" class="modal-bg hidden">
+        <div class="rating-modal-box">
+            <h3>Rate This Lady ⭐</h3>
+            <div class="stars" id="stars-row">
+                <span class="star" data-v="1">★</span>
+                <span class="star" data-v="2">★</span>
+                <span class="star" data-v="3">★</span>
+                <span class="star" data-v="4">★</span>
+                <span class="star" data-v="5">★</span>
+            </div>
+            <textarea class="modal-textarea" id="rating-comment" placeholder="Leave a comment (optional)..."></textarea>
+            <div class="modal-actions">
+                <button class="btn-submit" onclick="submitRating()">Submit Rating</button>
+                <button class="btn-ghost" onclick="closeRatingModal()" style="flex:0;padding:11px 18px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     LADY DASHBOARD
+════════════════════════════════════════════ -->
+    <div id="page-lady-dash" class="page hidden">
+        <nav class="dash-nav">
+            <span class="logo">Hook's Up 👑</span>
+            <div class="nav-right">
+                <span class="nav-user" id="lady-nav-name"></span>
+                <button class="btn-ghost" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+        <div class="dash-body">
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="val" id="stat-views">0</div>
+                    <div class="lbl">Total Views</div>
+                </div>
+                <div class="stat-card">
+                    <div class="val" id="stat-today">0</div>
+                    <div class="lbl">Today's Views</div>
+                </div>
+                <div class="stat-card">
+                    <div class="val" id="stat-rating">—</div>
+                    <div class="lbl">Avg Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="val" id="stat-rcount">0</div>
+                    <div class="lbl">Reviews</div>
+                </div>
+            </div>
+            <div class="dash-grid">
+                <div>
+                    <div class="panel">
+                        <h3>My Profile</h3>
+                        <div class="profile-pic-wrap" onclick="document.getElementById('profile-upload').click()">
+                            <div class="no-pic" id="profile-placeholder">💋</div>
+                            <img id="profile-img" class="hidden" alt="Profile" />
+                            <div class="upload-overlay">📷</div>
+                        </div>
+                        <input type="file" id="profile-upload" accept="image/*" onchange="uploadProfilePhoto(this)">
+                        <div class="field"><label>Display Name</label><input id="edit-name" type="text" /></div>
+                        <div class="field"><label>WhatsApp Number</label><input id="edit-phone" type="tel" /></div>
+                        <div class="field">
+                            <label>Location</label>
+                            <select id="edit-location">
+              <option value="">Select Town</option>
+              <option>Murang'a Town</option><option>Kangema</option><option>Kenol</option>
+              <option>Maragua</option><option>Kandara</option><option>Gatanga</option>
+              <option>Kigumo</option><option>Other</option>
+            </select>
+                        </div>
+                        <div class="field"><label>Bio</label><input id="edit-bio" type="text" placeholder="Tell clients about yourself..." /></div>
+                        <button class="btn-submit" onclick="updateProfile()">Save Changes</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="panel">
+                        <h3>My Gallery</h3>
+                        <div class="gallery-grid" id="lady-gallery"></div>
+                        <button class="upload-gallery-btn" onclick="document.getElementById('gallery-upload').click()">+ Add Photos</button>
+                        <input type="file" id="gallery-upload" accept="image/*" multiple onchange="uploadGalleryPhotos(this)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     CLIENT DASHBOARD
+════════════════════════════════════════════ -->
+    <div id="page-client-dash" class="page hidden">
+        <nav class="dash-nav">
+            <span class="logo">Hook's Up 🔥</span>
+            <div class="nav-right">
+                <span class="nav-user" id="client-nav-name"></span>
+                <button class="btn-ghost" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+        <div class="dash-body">
+            <div class="filters-row">
+                <input class="search-box" id="search-input" type="text" placeholder="🔍  Search by name or location..." oninput="filterLadies()" />
+                <select class="filter-select" id="location-filter" onchange="filterLadies()">
+        <option value="">All Locations</option>
+        <option>Murang'a Town</option><option>Kangema</option><option>Kenol</option>
+        <option>Maragua</option><option>Kandara</option><option>Gatanga</option>
+        <option>Kigumo</option><option>Other</option>
+      </select>
+                <select class="filter-select" id="sort-filter" onchange="filterLadies()">
+        <option value="">Default</option>
+        <option value="rating">Top Rated</option>
+        <option value="newest">Newest First</option>
+      </select>
+            </div>
+            <div class="ladies-grid" id="ladies-grid">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ════════════════════════════════════════════════════
+        //  CONFIG — set API_BASE to your server URL or null
+        // ════════════════════════════════════════════════════
+        const API_BASE = null;
+        const PAYMENT_AMOUNT = 50;
+        // Change this to your actual M-Pesa paybill/number:
+        const MPESA_NUMBER = '0748130976';
+
+        // ════════════════════════════════════════════════════
+        //  STATE
+        // ════════════════════════════════════════════════════
+        let currentUser = null;
+        let allLadies = [];
+        let pendingRegistration = null; // holds form data while payment happens
+        let pendingRole = null;
+        let currentRatingLadyId = null;
+        let currentStarValue = 0;
+        const photoIntervals = [];
+
+        // ════════════════════════════════════════════════════
+        //  BACKGROUND SLIDESHOW
+        // ════════════════════════════════════════════════════
+        const bgImages = [
+            'db1.jpg', 'db2.jpg', 'db3.jpg', 'db4.jpg', 'db5.jpg',
+            'db6.jpg', 'db7.jpg', 'db8.jpg', 'db9.jpg', 'db10.jpg'
+        ];
+
+        (function initSlideshow() {
+            const container = document.getElementById('bg-slideshow');
+            bgImages.forEach((src, i) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide' + (i === 0 ? ' active' : '');
+                slide.style.backgroundImage = `url('${src}')`;
+                container.appendChild(slide);
+            });
+            const slides = container.querySelectorAll('.slide');
+            let cur = 0;
+            setInterval(() => {
+                slides[cur].classList.remove('active');
+                cur = (cur + 1) % slides.length;
+                slides[cur].classList.add('active');
+            }, 4000);
+        })();
+
+        // ════════════════════════════════════════════════════
+        //  INIT — restore session
+        // ════════════════════════════════════════════════════
+        (function init() {
+            const saved = localStorage.getItem('mhu_session');
+            if (saved) {
+                try {
+                    currentUser = JSON.parse(saved);
+                    if (currentUser.role === 'lady') goLadyDash();
+                    else if (currentUser.role === 'client') goClientDash();
+                } catch {
+                    localStorage.removeItem('mhu_session');
+                }
+            }
+
+            document.querySelectorAll('.star').forEach(s => {
+                s.addEventListener('mouseenter', () => highlightStars(+s.dataset.v));
+                s.addEventListener('mouseleave', () => highlightStars(currentStarValue));
+                s.addEventListener('click', () => {
+                    currentStarValue = +s.dataset.v;
+                    highlightStars(currentStarValue);
+                });
+            });
+        })();
+
+        // ════════════════════════════════════════════════════
+        //  NAVIGATION
+        // ════════════════════════════════════════════════════
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function switchTab(who, tab) {
+            const prefix = who;
+            document.getElementById(`${prefix}-register-form`).classList.toggle('hidden', tab !== 'register');
+            document.getElementById(`${prefix}-login-form`).classList.toggle('hidden', tab !== 'login');
+            document.querySelectorAll(`#page-${who}-auth .auth-tab`).forEach((t, i) => {
+                t.classList.toggle('active', (i === 0 && tab === 'register') || (i === 1 && tab === 'login'));
+            });
+        }
+
+        function togglePass(id) {
+            const el = document.getElementById(id);
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+
+        // ════════════════════════════════════════════════════
+        //  TOAST
+        // ════════════════════════════════════════════════════
+        let toastTimer;
+
+        function toast(msg, type = '') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'show' + (type ? ' ' + type : '');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.className = '', 3200);
+        }
+
+        // ════════════════════════════════════════════════════
+        //  HELPERS
+        // ════════════════════════════════════════════════════
+        function lsGet(k) {
+            try {
+                return JSON.parse(localStorage.getItem(k) || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function lsSet(k, v) {
+            localStorage.setItem(k, JSON.stringify(v));
+        }
+
+        function genId() {
+            return Date.now().toString(36) + Math.random().toString(36).slice(2);
+        }
+
+        function escHtml(s) {
+            if (!s) return '';
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function formatPhone(p) {
+            const s = p.replace(/\s/g, '');
+            if (s.startsWith('07') || s.startsWith('01')) return '254' + s.slice(1);
+            if (s.startsWith('+')) return s.slice(1);
+            return s;
+        }
+
+        function validPhone(p) {
+            return /^(07|01)\d{8}$/.test(p);
+        }
+
+        function readFile(file) {
+            return new Promise((res, rej) => {
+                const r = new FileReader();
+                r.onload = e => res(e.target.result);
+                r.onerror = rej;
+                r.readAsDataURL(file);
+            });
+        }
+
+        function saveSession(u) {
+            currentUser = u;
+            localStorage.setItem('mhu_session', JSON.stringify(u));
+        }
+
+        // ════════════════════════════════════════════════════
+        //  BILLING MODAL
+        // ════════════════════════════════════════════════════
+        function showBillingModal(role, description) {
+            document.getElementById('bill-desc').textContent = description;
+            document.getElementById('bill-pay-section').classList.remove('hidden');
+            document.getElementById('bill-success-section').classList.add('hidden');
+            document.getElementById('mpesa-number').value = '';
+            document.getElementById('mpesa-code').value = '';
+            document.getElementById('billing-modal').classList.remove('hidden');
+            pendingRole = role;
+        }
+
+        function closeBillingModal() {
+            document.getElementById('billing-modal').classList.add('hidden');
+            pendingRegistration = null;
+            pendingRole = null;
+        }
+
+        // Simulate STK push (in production this calls your backend → Safaricom Daraja API)
+        async function processMpesa() {
+            const num = document.getElementById('mpesa-number').value.trim();
+            if (!num) return toast('Enter your M-Pesa number', 'err');
+            if (!validPhone(num)) return toast('Invalid number. Use format 07xxxxxxxx', 'err');
+
+            const btn = document.querySelector('.btn-mpesa');
+            btn.disabled = true;
+            btn.textContent = '⏳ Sending STK Push...';
+
+            // Simulate 2s delay (replace with real Daraja API call)
+            await new Promise(r => setTimeout(r, 2000));
+
+            btn.disabled = false;
+            btn.textContent = '💚 Pay KSh 50 via M-Pesa';
+
+            toast('STK Push sent to ' + num + '! Check your phone and enter the M-Pesa code below.', 'ok');
+        }
+
+        function confirmMpesaCode() {
+            const code = document.getElementById('mpesa-code').value.trim().toUpperCase();
+            if (!code || code.length < 8) return toast('Enter a valid M-Pesa confirmation code', 'err');
+
+            // In production: verify code against Daraja API
+            // For now we accept any code that looks like an M-Pesa code
+            if (!/^[A-Z0-9]{8,12}$/.test(code)) return toast('Invalid code format. M-Pesa codes are like QHX4AB12CD', 'err');
+
+            // Record payment
+            const payments = lsGet('mhu_payments');
+            payments.push({
+                code,
+                amount: PAYMENT_AMOUNT,
+                role: pendingRole,
+                timestamp: new Date().toISOString()
+            });
+            lsSet('mhu_payments', payments);
+
+            // Show success
+            document.getElementById('bill-pay-section').classList.add('hidden');
+            document.getElementById('bill-success-section').classList.remove('hidden');
+        }
+
+        function skipPayment() {
+            // Demo mode — skip payment
+            toast('Demo mode: payment skipped', '');
+            afterPaymentSuccess();
+        }
+
+        function afterPaymentSuccess() {
+            closeBillingModal();
+            if (pendingRegistration && pendingRole === 'lady') completeLadyRegistration();
+            else if (pendingRegistration && pendingRole === 'client') completeClientRegistration();
+        }
+
+        // ════════════════════════════════════════════════════
+        //  LADY REGISTRATION (2-step: form → payment → done)
+        // ════════════════════════════════════════════════════
+        function ladyRegisterInit() {
+            const name = document.getElementById('l-name').value.trim();
+            const username = document.getElementById('l-username').value.trim().toLowerCase();
+            const phone = document.getElementById('l-phone').value.trim();
+            const pass = document.getElementById('l-pass').value;
+            const location = document.getElementById('l-location').value;
+
+            if (!name) return toast('Full name is required', 'err');
+            if (!username) return toast('Username is required', 'err');
+            if (username.length < 3) return toast('Username must be at least 3 characters', 'err');
+            if (!pass || pass.length < 6) return toast('Password must be at least 6 characters', 'err');
+            if (!location) return toast('Please select your town', 'err');
+            if (phone && !validPhone(phone)) return toast('Invalid phone number. Use 07xxxxxxxx', 'err');
+
+            const ladies = lsGet('mhu_ladies');
+            if (ladies.find(l => l.username === username)) return toast('Username already taken', 'err');
+
+            // Store pending data, show billing
+            pendingRegistration = {
+                name,
+                username,
+                phone: phone || null,
+                pass,
+                location
+            };
+            showBillingModal('lady', `Pay KSh 50 to activate your lady profile as "${name}"`);
+        }
+
+        function completeLadyRegistration() {
+            const d = pendingRegistration;
+            if (!d) return;
+            const ladies = lsGet('mhu_ladies');
+            if (ladies.find(l => l.username === d.username)) return toast('Username taken', 'err');
+            const lady = {
+                id: genId(),
+                name: d.name,
+                username: d.username,
+                phone: d.phone,
+                password: d.pass,
+                location: d.location,
+                profile_photo: null,
+                photos: [],
+                bio: '',
+                ratings: [],
+                views: 0,
+                paid: true,
+                created_at: new Date().toISOString()
+            };
+            ladies.push(lady);
+            lsSet('mhu_ladies', ladies);
+            saveSession({
+                id: lady.id,
+                role: 'lady',
+                name: lady.name,
+                username: lady.username
+            });
+            pendingRegistration = null;
+            toast('Welcome! Your profile is live 🎉', 'ok');
+            goLadyDash();
+        }
+
+        // ════════════════════════════════════════════════════
+        //  LADY LOGIN
+        // ════════════════════════════════════════════════════
+        function ladyLogin() {
+            const username = document.getElementById('ll-username').value.trim().toLowerCase();
+            const pass = document.getElementById('ll-pass').value;
+            if (!username || !pass) return toast('Enter username and password', 'err');
+            const lady = lsGet('mhu_ladies').find(l => l.username === username && l.password === pass);
+            if (!lady) return toast('Invalid username or password', 'err');
+            saveSession({
+                id: lady.id,
+                role: 'lady',
+                name: lady.name,
+                username: lady.username
+            });
+            toast('Welcome back, ' + lady.name + '! 💋', 'ok');
+            goLadyDash();
+        }
+
+        // ════════════════════════════════════════════════════
+        //  CLIENT REGISTRATION
+        // ════════════════════════════════════════════════════
+        function clientRegisterInit() {
+            const user = document.getElementById('c-user').value.trim().toLowerCase();
+            const pass = document.getElementById('c-pass').value;
+            if (!user || user.length < 3) return toast('Username must be at least 3 characters', 'err');
+            if (!pass || pass.length < 6) return toast('Password must be at least 6 characters', 'err');
+            const clients = lsGet('mhu_clients');
+            if (clients.find(c => c.username === user)) return toast('Username already taken', 'err');
+
+            pendingRegistration = {
+                username: user,
+                pass
+            };
+            showBillingModal('client', 'Pay KSh 50 to unlock access to all ladies');
+        }
+
+        function completeClientRegistration() {
+            const d = pendingRegistration;
+            if (!d) return;
+            const clients = lsGet('mhu_clients');
+            if (clients.find(c => c.username === d.username)) return toast('Username taken', 'err');
+            const client = {
+                id: genId(),
+                username: d.username,
+                password: d.pass,
+                paid: true,
+                created_at: new Date().toISOString()
+            };
+            clients.push(client);
+            lsSet('mhu_clients', clients);
+            saveSession({
+                id: client.id,
+                role: 'client',
+                username: client.username
+            });
+            pendingRegistration = null;
+            toast('Access granted! Browse away 🔥', 'ok');
+            goClientDash();
+        }
+
+        // ════════════════════════════════════════════════════
+        //  CLIENT LOGIN
+        // ════════════════════════════════════════════════════
+        function clientLogin() {
+            const user = document.getElementById('cl-user').value.trim().toLowerCase();
+            const pass = document.getElementById('cl-pass').value;
+            if (!user || !pass) return toast('Enter username and password', 'err');
+            const client = lsGet('mhu_clients').find(c => c.username === user && c.password === pass);
+            if (!client) return toast('Invalid username or password', 'err');
+            saveSession({
+                id: client.id,
+                role: 'client',
+                username: client.username
+            });
+            toast('Welcome back! 🔥', 'ok');
+            goClientDash();
+        }
+
+        // ════════════════════════════════════════════════════
+        //  SESSION / LOGOUT
+        // ════════════════════════════════════════════════════
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('mhu_session');
+            photoIntervals.forEach(clearInterval);
+            photoIntervals.length = 0;
+            showPage('page-landing');
+            toast('Logged out. See you soon!');
+        }
+
+        // ════════════════════════════════════════════════════
+        //  LADY DASHBOARD
+        // ════════════════════════════════════════════════════
+        async function goLadyDash() {
+            showPage('page-lady-dash');
+            document.getElementById('lady-nav-name').textContent = currentUser.name || currentUser.username;
+            loadLadyProfile();
+            loadLadyStats();
+        }
+
+        function getLadyLS() {
+            return lsGet('mhu_ladies').find(l => l.id === currentUser.id);
+        }
+
+        function loadLadyProfile() {
+            const lady = getLadyLS();
+            if (!lady) return logout();
+
+            document.getElementById('edit-name').value = lady.name || '';
+            document.getElementById('edit-phone').value = lady.phone || '';
+            document.getElementById('edit-bio').value = lady.bio || '';
+
+            const sel = document.getElementById('edit-location');
+            [...sel.options].forEach(o => {
+                o.selected = o.value === lady.location;
+            });
+
+            const img = document.getElementById('profile-img');
+            const ph = document.getElementById('profile-placeholder');
+            if (lady.profile_photo) {
+                img.src = lady.profile_photo;
+                img.classList.remove('hidden');
+                ph.classList.add('hidden');
+            } else {
+                img.classList.add('hidden');
+                ph.classList.remove('hidden');
+            }
+
+            const grid = document.getElementById('lady-gallery');
+            grid.innerHTML = '';
+            (lady.photos || []).forEach((url, i) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                const safe = escHtml(url);
+                item.innerHTML = `<img src="${safe}" alt="photo" /><button class="del-btn" onclick="deletePhoto(${i})">✕</button>`;
+                grid.appendChild(item);
+            });
+        }
+
+        function loadLadyStats() {
+            const lady = getLadyLS();
+            if (!lady) return;
+            const ratings = lady.ratings || [];
+            const avg = ratings.length ?
+                (ratings.reduce((a, b) => a + (typeof b === 'object' ? b.score : b), 0) / ratings.length).toFixed(1) :
+                '—';
+            document.getElementById('stat-views').textContent = lady.views || 0;
+            document.getElementById('stat-today').textContent = lady.views_today || 0;
+            document.getElementById('stat-rating').textContent = avg;
+            document.getElementById('stat-rcount').textContent = ratings.length;
+        }
+
+        function updateProfile() {
+            const name = document.getElementById('edit-name').value.trim();
+            const phone = document.getElementById('edit-phone').value.trim();
+            const location = document.getElementById('edit-location').value;
+            const bio = document.getElementById('edit-bio').value.trim();
+
+            if (!name) return toast('Name is required', 'err');
+            if (!location) return toast('Please select your location', 'err');
+            if (phone && !validPhone(phone)) return toast('Invalid phone number', 'err');
+
+            const ladies = lsGet('mhu_ladies');
+            const idx = ladies.findIndex(l => l.id === currentUser.id);
+            if (idx === -1) return;
+            ladies[idx] = {...ladies[idx],
+                name,
+                phone: phone || null,
+                location,
+                bio
+            };
+            lsSet('mhu_ladies', ladies);
+            currentUser.name = name;
+            saveSession(currentUser);
+            document.getElementById('lady-nav-name').textContent = name;
+            toast('Profile updated! ✨', 'ok');
+        }
+
+        async function uploadProfilePhoto(input) {
+            if (!input.files[0]) return;
+            const file = input.files[0];
+            if (file.size > 5 * 1024 * 1024) return toast('File too large (max 5MB)', 'err');
+            const dataUrl = await readFile(file);
+            const ladies = lsGet('mhu_ladies');
+            const idx = ladies.findIndex(l => l.id === currentUser.id);
+            ladies[idx].profile_photo = dataUrl;
+            lsSet('mhu_ladies', ladies);
+            document.getElementById('profile-img').src = dataUrl;
+            document.getElementById('profile-img').classList.remove('hidden');
+            document.getElementById('profile-placeholder').classList.add('hidden');
+            toast('Profile photo updated! 📸', 'ok');
+        }
+
+        async function uploadGalleryPhotos(input) {
+            const files = [...input.files];
+            if (!files.length) return;
+            const ladies = lsGet('mhu_ladies');
+            const idx = ladies.findIndex(l => l.id === currentUser.id);
+            for (const file of files) {
+                if (file.size > 5 * 1024 * 1024) {
+                    toast('A file is too large (max 5MB)', 'err');
+                    continue;
+                }
+                const dataUrl = await readFile(file);
+                ladies[idx].photos = ladies[idx].photos || [];
+                ladies[idx].photos.push(dataUrl);
+            }
+            lsSet('mhu_ladies', ladies);
+            loadLadyProfile();
+            toast(`${files.length} photo(s) added! 🖼️`, 'ok');
+            input.value = '';
+        }
+
+        function deletePhoto(i) {
+            if (!confirm('Delete this photo?')) return;
+            const ladies = lsGet('mhu_ladies');
+            const idx = ladies.findIndex(l => l.id === currentUser.id);
+            ladies[idx].photos.splice(i, 1);
+            lsSet('mhu_ladies', ladies);
+            loadLadyProfile();
+            toast('Photo deleted');
+        }
+
+        // ════════════════════════════════════════════════════
+        //  CLIENT DASHBOARD
+        // ════════════════════════════════════════════════════
+        function goClientDash() {
+            showPage('page-client-dash');
+            document.getElementById('client-nav-name').textContent = currentUser.username;
+            loadAllLadies();
+        }
+
+        function loadAllLadies() {
+            document.getElementById('ladies-grid').innerHTML = '<div class="spinner"></div>';
+
+            const raw = lsGet('mhu_ladies');
+            // Track views
+            const today = new Date().toDateString();
+            raw.forEach(l => {
+                l.views = (l.views || 0) + 1;
+                if (l.last_view_date !== today) {
+                    l.views_today = 0;
+                    l.last_view_date = today;
+                }
+                l.views_today = (l.views_today || 0) + 1;
+            });
+            lsSet('mhu_ladies', raw);
+
+            allLadies = raw.map(l => ({
+                id: l.id,
+                name: l.name,
+                username: l.username,
+                phone: l.phone,
+                location: l.location,
+                bio: l.bio,
+                profile_photo: l.profile_photo,
+                photos: (l.photos || []).map((url, i) => ({
+                    id: i,
+                    url
+                })),
+                ratings: l.ratings || [],
+                rating: (l.ratings || []).length ?
+                    ((l.ratings.reduce((a, b) => a + (typeof b === 'object' ? b.score : b), 0)) / l.ratings.length).toFixed(1) : null,
+                rating_count: (l.ratings || []).length,
+                created_at: l.created_at
+            }));
+
+            renderLadies(allLadies);
+        }
+
+        function filterLadies() {
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const location = document.getElementById('location-filter').value;
+            const sort = document.getElementById('sort-filter').value;
+
+            let filtered = allLadies.filter(l => {
+                const okSearch = !search || l.name.toLowerCase().includes(search) || l.location.toLowerCase().includes(search);
+                const okLocation = !location || l.location === location;
+                return okSearch && okLocation;
+            });
+
+            if (sort === 'rating') filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            if (sort === 'newest') filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            renderLadies(filtered);
+        }
+
+        function renderLadies(ladies) {
+            photoIntervals.forEach(clearInterval);
+            photoIntervals.length = 0;
+
+            const grid = document.getElementById('ladies-grid');
+            grid.innerHTML = '';
+
+            if (!ladies.length) {
+                grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="big">🔍</div><p>No ladies found</p></div>`;
+                return;
+            }
+
+            ladies.forEach(lady => {
+                        const card = document.createElement('div');
+                        card.className = 'lady-card';
+
+                        const allPhotos = [];
+                        if (lady.profile_photo) allPhotos.push(lady.profile_photo);
+                        (lady.photos || []).forEach(p => allPhotos.push(p.url));
+
+                        const stars = lady.rating ?
+                            '★'.repeat(Math.round(+lady.rating)) + '☆'.repeat(5 - Math.round(+lady.rating)) :
+                            '☆☆☆☆☆';
+
+                        const waHref = lady.phone ? `https://wa.me/${formatPhone(lady.phone)}` : null;
+
+                        card.innerHTML = `
+      <div class="card-photos">
+        ${allPhotos.length
+          ? `<img class="card-photo" src="${escHtml(allPhotos[0])}" alt="${escHtml(lady.name)}" />`
+          : '<div class="no-photo">💋</div>'}
+        ${lady.rating ? `<div class="card-badge">⭐ ${lady.rating}</div>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-name"></div>
+        <div class="card-meta">
+          <span>📍 <span class="loc-text"></span></span>
+          <span style="color:var(--gold)">${stars} ${lady.rating || ''}</span>
+        </div>
+        ${lady.bio ? `<div class="card-bio" style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.4;"></div>` : ''}
+        <div class="card-actions">
+          ${waHref
+            ? `<a class="btn-wa" href="${escHtml(waHref)}" target="_blank" rel="noopener">📲 WhatsApp</a>`
+            : `<span style="color:var(--muted);font-size:0.82rem;align-self:center">No WhatsApp</span>`}
+          <button class="btn-rate" onclick="openRatingModal('${lady.id}')">⭐ Rate</button>
+        </div>
+      </div>`;
+
+    card.querySelector('.card-name').textContent = lady.name;
+    card.querySelector('.loc-text').textContent  = lady.location;
+    if (lady.bio) card.querySelector('.card-bio').textContent = lady.bio;
+
+    grid.appendChild(card);
+
+    // Photo cycling
+    if (allPhotos.length > 1) {
+      let idx = 1;
+      const imgEl = card.querySelector('.card-photo');
+      const iv = setInterval(() => {
+        if (!document.contains(imgEl)) { clearInterval(iv); return; }
+        imgEl.style.opacity = '0';
+        setTimeout(() => {
+          if (!document.contains(imgEl)) return;
+          imgEl.src = allPhotos[idx];
+          imgEl.style.opacity = '1';
+          idx = (idx + 1) % allPhotos.length;
+        }, 500);
+      }, 3500);
+      photoIntervals.push(iv);
+    }
+  });
+}
+
+// ════════════════════════════════════════════════════
+//  RATING
+// ════════════════════════════════════════════════════
+function openRatingModal(ladyId) {
+  currentRatingLadyId = ladyId;
+  currentStarValue = 0;
+  highlightStars(0);
+  document.getElementById('rating-comment').value = '';
+  document.getElementById('rating-modal').classList.remove('hidden');
+}
+
+function closeRatingModal() {
+  document.getElementById('rating-modal').classList.add('hidden');
+  currentRatingLadyId = null;
+}
+
+function highlightStars(val) {
+  document.querySelectorAll('.star').forEach(s => {
+    s.classList.toggle('on', +s.dataset.v <= val);
+  });
+}
+
+function submitRating() {
+  if (!currentStarValue) return toast('Please pick a star rating', 'err');
+  const comment = document.getElementById('rating-comment').value.trim();
+
+  const ladies = lsGet('mhu_ladies');
+  const idx = ladies.findIndex(l => l.id === currentRatingLadyId);
+  if (idx === -1) return toast('Lady not found', 'err');
+
+  ladies[idx].ratings = ladies[idx].ratings || [];
+  const existing = ladies[idx].ratings.findIndex(r => r && r.by === currentUser.username);
+  const entry = { score: currentStarValue, comment, by: currentUser.username };
+  if (existing !== -1) ladies[idx].ratings[existing] = entry;
+  else ladies[idx].ratings.push(entry);
+
+  lsSet('mhu_ladies', ladies);
+  closeRatingModal();
+  toast('Rating submitted! ⭐', 'ok');
+  loadAllLadies();
+}
+    </script>
+</body>
+
+</html>
